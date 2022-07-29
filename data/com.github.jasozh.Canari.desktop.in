@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=canari
+Exec=canari
+Icon=com.github.jasozh.Canari
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

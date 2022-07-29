@@ -1,0 +1,7 @@
+data/com.github.jasozh.Canari.desktop.in
+data/com.github.jasozh.Canari.appdata.xml.in
+data/com.github.jasozh.Canari.gschema.xml
+src/window.ui
+src/main.py
+src/window.py
+
