@@ -84,63 +84,74 @@
                   </object>
                 </child>
 
-
                 <!-- GTK LIST BOX -->
                 <child>
-                  <object class="GtkListBox">
+                  <object class="GtkListBox" id='course_list_box'>
                     <property name="selection-mode">none</property>
                     <property name="width-request">500</property>
                     <style>
                       <class name="boxed-list"/>
                     </style>
-                    <child>
-                      <object class="AdwActionRow">
-                        <property name="icon-name">software-update-urgent-symbolic</property>
-                        <property name="title">ENGRG 1028 (CS 2800 AEW) SEM 101</property>
-                        <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
-                        <child>
-                          <object class="GtkLabel" id="label1">
-                            <property name="label">OPEN</property>
-                            <property name="css-classes">heading</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwActionRow" id="actionrow">
-                        <property name="icon-name">dialog-error-symbolic</property>
-                        <property name="title">FREN 1220 DIS 204</property>
-                        <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
-                        <child>
-                          <object class="GtkBox" id="label2">
-                            <child>
-                              <object class="GtkLabel" id="label2a">
-                                <property name="label">Closed </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label0">
-                                <property name="label">Closed</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwActionRow">
-                        <property name="icon-name">dialog-error-symbolic</property>
-                        <property name="title">CS 2800 DIS 211</property>
-                        <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
-                        <child>
-                          <object class="GtkLabel" id="label3">
-                            <property name="label">Closed</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
                   </object>
                 </child>
+
+
+                <!-- GTK LIST BOX SAMPLE DATA -->
+                <!-- <child> -->
+                <!--   <object class="GtkListBox" id='course_list_box'> -->
+                <!--     <property name="selection-mode">none</property> -->
+                <!--     <property name="width-request">500</property> -->
+                <!--     <style> -->
+                <!--       <class name="boxed-list"/> -->
+                <!--     </style> -->
+                <!--     <child> -->
+                <!--       <object class="AdwActionRow"> -->
+                <!--         <property name="icon-name">software-update-urgent-symbolic</property> -->
+                <!--         <property name="title">ENGRG 1028 (CS 2800 AEW) SEM 101</property> -->
+                <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
+                <!--         <child> -->
+                <!--           <object class="GtkLabel" id="label1"> -->
+                <!--             <property name="label">OPEN</property> -->
+                <!--             <property name="css-classes">heading</property> -->
+                <!--           </object> -->
+                <!--         </child> -->
+                <!--       </object> -->
+                <!--     </child> -->
+                <!--     <child> -->
+                <!--       <object class="AdwActionRow" id="actionrow"> -->
+                <!--         <property name="icon-name">dialog-error-symbolic</property> -->
+                <!--         <property name="title">FREN 1220 DIS 204</property> -->
+                <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
+                <!--         <child> -->
+                <!--           <object class="GtkBox" id="label2"> -->
+                <!--             <child> -->
+                <!--               <object class="GtkLabel" id="label2a"> -->
+                <!--                 <property name="label">Closed </property> -->
+                <!--               </object> -->
+                <!--             </child> -->
+                <!--             <child> -->
+                <!--               <object class="GtkLabel" id="label0"> -->
+                <!--                 <property name="label">Closed</property> -->
+                <!--               </object> -->
+                <!--             </child> -->
+                <!--           </object> -->
+                <!--         </child> -->
+                <!--       </object> -->
+                <!--     </child> -->
+                <!--     <child> -->
+                <!--       <object class="AdwActionRow"> -->
+                <!--         <property name="icon-name">dialog-error-symbolic</property> -->
+                <!--         <property name="title">CS 2800 DIS 211</property> -->
+                <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
+                <!--         <child> -->
+                <!--           <object class="GtkLabel" id="label3"> -->
+                <!--             <property name="label">Closed</property> -->
+                <!--           </object> -->
+                <!--         </child> -->
+                <!--       </object> -->
+                <!--     </child> -->
+                <!--   </object> -->
+                <!-- </child> -->
 
               </object>
             </child>
