@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Adw
 
 
 @Gtk.Template(resource_path='/com/github/jasozh/Canari/window.ui')
@@ -24,11 +24,14 @@ class CanariWindow(Gtk.ApplicationWindow):
 
     welcome_screen = Gtk.Template.Child()
     main_screen = Gtk.Template.Child()
+    actionrow = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.main_screen.hide()
-        self.welcome_screen.show()
+        self.welcome_screen.hide()
+        self.main_screen.show()
+        # self.actionrow.add_suffix(Gtk.Label(label="Test"))
+        # self.actionrow.add_prefix(Gtk.Button(label="Test", icon_name="open-menu-symbolic"))
 
 
 class AboutDialog(Gtk.AboutDialog):
