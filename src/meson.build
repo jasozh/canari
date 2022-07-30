@@ -29,6 +29,7 @@ canari_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'tmpdata.py'
 ]
 
 install_data(canari_sources, install_dir: moduledir)
