@@ -32,7 +32,6 @@
           <object class="GtkBox">
             <property name="hexpand">true</property>
             <property name="vexpand">true</property>
-            <property name="valign">center</property>
             <property name="halign">center</property>
             <property name="orientation">vertical</property>
 
@@ -42,6 +41,7 @@
                 <property name="title">My App</property>
                 <property name="description">My App is awesome</property>
                 <property name="icon-name">applications-science-symbolic</property>
+                <property name="vexpand">true</property>
                 <child>
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
@@ -70,38 +70,70 @@
 
             <!-- MAIN SCREEN -->
             <child>
-              <object class="GtkListBox" id="main_screen">
-                <property name="selection-mode">none</property>
-                <property name="width-request">500</property>
-                <style>
-                  <class name="boxed-list"/>
-                </style>
+              <object class="GtkBox" id="main_screen">
+                <property name="orientation">vertical</property>
+
+                <!-- HEADER -->
                 <child>
-                  <object class="AdwActionRow">
-                    <property name="icon-name">software-update-urgent-symbolic</property>
-                    <property name="title">ENGRG 1028 (CS 2800 AEW) SEM 101</property>
-                    <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
-                    <child>
-                      <object class="GtkLabel" id="label1">
-                        <property name="label">OPEN</property>
-                      </object>
-                    </child>
+                  <object class="GtkLabel">
+                    <property name="label">Tracked Courses</property>
+                    <property name="css-classes">heading</property>
+                    <property name="halign">start</property>
+                    <property name="margin-bottom">12</property>
+                    <property name="margin-top">24</property>
                   </object>
                 </child>
+
+
+                <!-- GTK LIST BOX -->
                 <child>
-                  <object class="AdwActionRow" id="actionrow">
-                    <property name="icon-name">dialog-error-symbolic</property>
-                    <property name="title">FREN 1220 DIS 204</property>
-                    <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
+                  <object class="GtkListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="width-request">500</property>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
                     <child>
-                      <object class="GtkBox" id="label2">
+                      <object class="AdwActionRow">
+                        <property name="icon-name">software-update-urgent-symbolic</property>
+                        <property name="title">ENGRG 1028 (CS 2800 AEW) SEM 101</property>
+                        <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
                         <child>
-                          <object class="GtkLabel" id="label2a">
-                            <property name="label">Closed </property>
+                          <object class="GtkLabel" id="label1">
+                            <property name="label">OPEN</property>
+                            <property name="css-classes">heading</property>
                           </object>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="actionrow">
+                        <property name="icon-name">dialog-error-symbolic</property>
+                        <property name="title">FREN 1220 DIS 204</property>
+                        <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
                         <child>
-                          <object class="GtkLabel" id="label0">
+                          <object class="GtkBox" id="label2">
+                            <child>
+                              <object class="GtkLabel" id="label2a">
+                                <property name="label">Closed </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label0">
+                                <property name="label">Closed</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="icon-name">dialog-error-symbolic</property>
+                        <property name="title">CS 2800 DIS 211</property>
+                        <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
+                        <child>
+                          <object class="GtkLabel" id="label3">
                             <property name="label">Closed</property>
                           </object>
                         </child>
@@ -109,18 +141,7 @@
                     </child>
                   </object>
                 </child>
-                <child>
-                  <object class="AdwActionRow">
-                    <property name="icon-name">dialog-error-symbolic</property>
-                    <property name="title">CS 2800 DIS 211</property>
-                    <property name="subtitle">Last updated at 01:41:28 (Closed)</property>
-                    <child>
-                      <object class="GtkLabel" id="label3">
-                        <property name="label">Closed</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
+
               </object>
             </child>
 
