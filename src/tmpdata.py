@@ -4,7 +4,7 @@ course_data = [
         'course_id': '19233',
         'next_id': '19234',
         'url': 'https://classes.cornell.edu/browse/roster/SP22/class/ENGRG/1028',
-        'status': 'closed',
+        'status': 'open',
         'last_update': 'time obj here'
     },
     {

@@ -8,10 +8,23 @@
 
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
+        <child type="start">
+          <object class="GtkButton">
+            <property name="icon-name">list-add-symbolic</property>
+            <property name="tooltip-text">Add course</property>
+          </object>
+        </child>
         <child type="end">
           <object class="GtkMenuButton">
             <property name="icon-name">open-menu-symbolic</property>
             <property name="menu-model">primary_menu</property>
+            <property name="tooltip-text">Menu</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton">
+            <property name="icon-name">view-refresh-symbolic</property>
+            <property name="tooltip-text">Refresh</property>
           </object>
         </child>
       </object>
@@ -89,9 +102,11 @@
                   <object class="GtkListBox" id='course_list_box'>
                     <property name="selection-mode">none</property>
                     <property name="width-request">500</property>
+                    <property name="margin-bottom">24</property>
                     <style>
                       <class name="boxed-list"/>
                     </style>
+                    <!--  ADWACTIONROW CHILDREN GO HERE, ADDED BY WINDOW.PY -->
                   </object>
                 </child>
 
