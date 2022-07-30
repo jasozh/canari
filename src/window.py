@@ -22,10 +22,13 @@ from gi.repository import Gtk
 class CanariWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'CanariWindow'
 
-    label = Gtk.Template.Child()
+    welcome_screen = Gtk.Template.Child()
+    main_screen = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.main_screen.hide()
+        self.welcome_screen.show()
 
 
 class AboutDialog(Gtk.AboutDialog):

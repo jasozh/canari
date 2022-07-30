@@ -2,8 +2,10 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <template class="CanariWindow" parent="GtkApplicationWindow">
-    <property name="default-width">600</property>
-    <property name="default-height">300</property>
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
+    <property name="title">Canari</property>
+
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
         <child type="end">
@@ -14,13 +16,88 @@
         </child>
       </object>
     </child>
+
     <child>
-      <object class="GtkLabel" id="label">
-        <property name="label">Hello, World!</property>
-        <attributes>
-          <attribute name="weight" value="bold"/>
-          <attribute name="scale" value="2"/>
-        </attributes>
+      <!-- GTK SCROLLED WINDOW -->
+      <object class="GtkScrolledWindow">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+
+        <!-- GTK BOX -->
+        <property name="child">
+          <object class="GtkBox">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+            <property name="valign">center</property>
+            <property name="halign">center</property>
+            <property name="orientation">vertical</property>
+
+            <!-- WELCOME PAGE -->
+            <child>
+              <object class="AdwStatusPage" id="welcome_screen">
+                <property name="title">My App</property>
+                <property name="description">My App is awesome</property>
+                <property name="icon-name">applications-science-symbolic</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLinkButton">
+                        <property name="label">API Reference</property>
+                        <property name="uri">https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.ApplicationWindow.html</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton">
+                        <property name="label">Human Interface Guidelines</property>
+                        <property name="uri">https://developer.gnome.org/hig/patterns/containers/windows.html</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                      <property name="row-span">2</property>
+                      <property name="column-span">1</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <!-- MAIN SCREEN -->
+            <child>
+              <object class="GtkGrid" id="main_screen">
+                <child>
+                  <object class="GtkLabel" id="label1">
+                    <property name="label">Description</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                      <property name="row-span">1</property>
+                      <property name="column-span">1</property>
+                    </layout>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkEntry" id="description_entry">
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">0</property>
+                      <property name="row-span">1</property>
+                      <property name="column-span">1</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+          </object>
+        </property>
       </object>
     </child>
   </template>
