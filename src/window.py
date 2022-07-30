@@ -26,11 +26,13 @@ class CanariWindow(Gtk.ApplicationWindow):
     welcome_screen = Gtk.Template.Child()
     main_screen = Gtk.Template.Child()
     course_list_box = Gtk.Template.Child()
+    course_list_box_children = []
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.show_content(course_data)
+        self.show_tracked_courses(course_data)
         self.show_tracked_courses(course_data)
 
     def show_content(self, course_list: list) -> None:
@@ -54,6 +56,12 @@ class CanariWindow(Gtk.ApplicationWindow):
         The properties of the AdwActionRow are instantiated in the following order:
             icon-name, title, subtitle, child
         """
+        # Remove all existing children of course_list_box
+        if len(self.course_list_box_children) > 0:
+            for child in self.course_list_box_children:
+                self.course_list_box.remove(child)
+                print('Removed child')
+
         for item in course_list:
             course_row = Adw.ActionRow()
 
@@ -82,6 +90,7 @@ class CanariWindow(Gtk.ApplicationWindow):
             # course_row.add_prefix(Gtk.Button(label="Test", icon_name="open-menu-symbolic"))
 
             self.course_list_box.append(course_row)
+            self.course_list_box_children.append(course_row)
 
 
 class AboutDialog(Gtk.AboutDialog):
