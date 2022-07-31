@@ -27,6 +27,7 @@ class CanariWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'CanariWindow'
 
     # UI component bindings
+    toast_overlay          = Gtk.Template.Child()
     welcome_screen         = Gtk.Template.Child()
     main_screen            = Gtk.Template.Child()
     add_course_button      = Gtk.Template.Child()
@@ -64,6 +65,7 @@ class CanariWindow(Gtk.ApplicationWindow):
         """
         self.scraper.update_course_list()
         self.show_tracked_courses(self.scraper.get_course_list())
+        self.toast_overlay.add_toast(Adw.Toast(title=f"Courses refreshed"))
 
         return True
 

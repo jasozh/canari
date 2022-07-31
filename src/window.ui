@@ -34,174 +34,178 @@
     </child>
 
     <child>
-      <!-- GTK SCROLLED WINDOW -->
-      <object class="GtkScrolledWindow">
-        <property name="hexpand">true</property>
-        <property name="vexpand">true</property>
-        <property name="margin-top">6</property>
-        <property name="margin-bottom">6</property>
-        <property name="margin-start">6</property>
-        <property name="margin-end">6</property>
-
-        <!-- GTK BOX -->
+      <object class="AdwToastOverlay" id="toast_overlay">
         <property name="child">
-          <object class="GtkBox">
+          <!-- GTK SCROLLED WINDOW -->
+          <object class="GtkScrolledWindow">
             <property name="hexpand">true</property>
             <property name="vexpand">true</property>
-            <property name="halign">center</property>
-            <property name="orientation">vertical</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">6</property>
+            <property name="margin-start">6</property>
+            <property name="margin-end">6</property>
 
-            <!-- WELCOME PAGE -->
-            <child>
-              <object class="AdwStatusPage" id="welcome_screen">
-                <property name="title">My App</property>
-                <property name="description">My App is awesome</property>
-                <property name="icon-name">applications-science-symbolic</property>
+            <!-- GTK BOX -->
+            <property name="child">
+              <object class="GtkBox">
+                <property name="hexpand">true</property>
                 <property name="vexpand">true</property>
-                <child>
-                  <object class="GtkBox">
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLinkButton">
-                        <property name="label">API Reference</property>
-                        <property name="uri">https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.ApplicationWindow.html</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLinkButton">
-                        <property name="label">Human Interface Guidelines</property>
-                        <property name="uri">https://developer.gnome.org/hig/patterns/containers/windows.html</property>
-                      </object>
-                    </child>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                      <property name="row-span">2</property>
-                      <property name="column-span">1</property>
-                    </layout>
-                  </object>
-                </child>
-              </object>
-            </child>
-
-            <!-- MAIN SCREEN -->
-            <child>
-              <object class="GtkBox" id="main_screen">
+                <property name="halign">center</property>
                 <property name="orientation">vertical</property>
 
-                <!-- HEADER -->
+                <!-- WELCOME PAGE -->
                 <child>
-                  <object class="GtkLabel">
-                    <property name="label">Tracked Courses</property>
-                    <property name="css-classes">heading</property>
-                    <property name="halign">start</property>
-                    <property name="margin-bottom">12</property>
-                    <property name="margin-top">24</property>
+                  <object class="AdwStatusPage" id="welcome_screen">
+                    <property name="title">My App</property>
+                    <property name="description">My App is awesome</property>
+                    <property name="icon-name">applications-science-symbolic</property>
+                    <property name="vexpand">true</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLinkButton">
+                            <property name="label">API Reference</property>
+                            <property name="uri">https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.ApplicationWindow.html</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLinkButton">
+                            <property name="label">Human Interface Guidelines</property>
+                            <property name="uri">https://developer.gnome.org/hig/patterns/containers/windows.html</property>
+                          </object>
+                        </child>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                          <property name="row-span">2</property>
+                          <property name="column-span">1</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
 
-                <!-- GTK LIST BOX -->
+                <!-- MAIN SCREEN -->
                 <child>
-                  <object class="GtkListBox" id='course_list_box'>
-                    <property name="selection-mode">none</property>
-                    <property name="width-request">500</property>
-                    <property name="margin-bottom">24</property>
-                    <style>
-                      <class name="boxed-list"/>
-                    </style>
-                    <!--  ADWACTIONROW CHILDREN GO HERE, ADDED BY WINDOW.PY -->
+                  <object class="GtkBox" id="main_screen">
+                    <property name="orientation">vertical</property>
+
+                    <!-- HEADER -->
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Tracked Courses</property>
+                        <property name="css-classes">heading</property>
+                        <property name="halign">start</property>
+                        <property name="margin-bottom">12</property>
+                        <property name="margin-top">24</property>
+                      </object>
+                    </child>
+
+                    <!-- GTK LIST BOX -->
+                    <child>
+                      <object class="GtkListBox" id='course_list_box'>
+                        <property name="selection-mode">none</property>
+                        <property name="width-request">500</property>
+                        <property name="margin-bottom">24</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
+                        <!--  ADWACTIONROW CHILDREN GO HERE, ADDED BY WINDOW.PY -->
+                      </object>
+                    </child>
+
+
+                    <!-- GTK LIST BOX SAMPLE DATA -->
+                    <!-- <child> -->
+                    <!--   <object class="GtkListBox" id='course_list_box'> -->
+                    <!--     <property name="selection-mode">none</property> -->
+                    <!--     <property name="width-request">500</property> -->
+                    <!--     <style> -->
+                    <!--       <class name="boxed-list"/> -->
+                    <!--     </style> -->
+                    <!--     <child> -->
+                    <!--       <object class="AdwActionRow"> -->
+                    <!--         <property name="icon-name">software-update-urgent-symbolic</property> -->
+                    <!--         <property name="title">ENGRG 1028 (CS 2800 AEW) SEM 101</property> -->
+                    <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
+                    <!--         <child> -->
+                    <!--           <object class="GtkLabel" id="label1"> -->
+                    <!--             <property name="label">OPEN</property> -->
+                    <!--             <property name="css-classes">heading</property> -->
+                    <!--           </object> -->
+                    <!--         </child> -->
+                    <!--       </object> -->
+                    <!--     </child> -->
+                    <!--     <child> -->
+                    <!--       <object class="AdwActionRow" id="actionrow"> -->
+                    <!--         <property name="icon-name">dialog-error-symbolic</property> -->
+                    <!--         <property name="title">FREN 1220 DIS 204</property> -->
+                    <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
+                    <!--         <child> -->
+                    <!--           <object class="GtkBox" id="label2"> -->
+                    <!--             <child> -->
+                    <!--               <object class="GtkLabel" id="label2a"> -->
+                    <!--                 <property name="label">Closed </property> -->
+                    <!--               </object> -->
+                    <!--             </child> -->
+                    <!--             <child> -->
+                    <!--               <object class="GtkLabel" id="label0"> -->
+                    <!--                 <property name="label">Closed</property> -->
+                    <!--               </object> -->
+                    <!--             </child> -->
+                    <!--           </object> -->
+                    <!--         </child> -->
+                    <!--       </object> -->
+                    <!--     </child> -->
+                    <!--     <child> -->
+                    <!--       <object class="AdwActionRow"> -->
+                    <!--         <property name="icon-name">dialog-error-symbolic</property> -->
+                    <!--         <property name="title">CS 2800 DIS 211</property> -->
+                    <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
+                    <!--         <child> -->
+                    <!--           <object class="GtkLabel" id="label3"> -->
+                    <!--             <property name="label">Closed</property> -->
+                    <!--           </object> -->
+                    <!--         </child> -->
+                    <!--       </object> -->
+                    <!--     </child> -->
+                    <!--   </object> -->
+                    <!-- </child> -->
+
                   </object>
                 </child>
 
-
-                <!-- GTK LIST BOX SAMPLE DATA -->
+                <!-- OLD MAIN SCREEN -->
                 <!-- <child> -->
-                <!--   <object class="GtkListBox" id='course_list_box'> -->
-                <!--     <property name="selection-mode">none</property> -->
-                <!--     <property name="width-request">500</property> -->
-                <!--     <style> -->
-                <!--       <class name="boxed-list"/> -->
-                <!--     </style> -->
+                <!--   <object class="GtkGrid" id="main_screen"> -->
                 <!--     <child> -->
-                <!--       <object class="AdwActionRow"> -->
-                <!--         <property name="icon-name">software-update-urgent-symbolic</property> -->
-                <!--         <property name="title">ENGRG 1028 (CS 2800 AEW) SEM 101</property> -->
-                <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
-                <!--         <child> -->
-                <!--           <object class="GtkLabel" id="label1"> -->
-                <!--             <property name="label">OPEN</property> -->
-                <!--             <property name="css-classes">heading</property> -->
-                <!--           </object> -->
-                <!--         </child> -->
+                <!--       <object class="GtkLabel" id="label1"> -->
+                <!--         <property name="label">Description</property> -->
+                <!--         <layout> -->
+                <!--           <property name="column">0</property> -->
+                <!--           <property name="row">0</property> -->
+                <!--           <property name="row-span">1</property> -->
+                <!--           <property name="column-span">1</property> -->
+                <!--         </layout> -->
                 <!--       </object> -->
                 <!--     </child> -->
+
                 <!--     <child> -->
-                <!--       <object class="AdwActionRow" id="actionrow"> -->
-                <!--         <property name="icon-name">dialog-error-symbolic</property> -->
-                <!--         <property name="title">FREN 1220 DIS 204</property> -->
-                <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
-                <!--         <child> -->
-                <!--           <object class="GtkBox" id="label2"> -->
-                <!--             <child> -->
-                <!--               <object class="GtkLabel" id="label2a"> -->
-                <!--                 <property name="label">Closed </property> -->
-                <!--               </object> -->
-                <!--             </child> -->
-                <!--             <child> -->
-                <!--               <object class="GtkLabel" id="label0"> -->
-                <!--                 <property name="label">Closed</property> -->
-                <!--               </object> -->
-                <!--             </child> -->
-                <!--           </object> -->
-                <!--         </child> -->
-                <!--       </object> -->
-                <!--     </child> -->
-                <!--     <child> -->
-                <!--       <object class="AdwActionRow"> -->
-                <!--         <property name="icon-name">dialog-error-symbolic</property> -->
-                <!--         <property name="title">CS 2800 DIS 211</property> -->
-                <!--         <property name="subtitle">Last updated at 01:41:28 (Closed)</property> -->
-                <!--         <child> -->
-                <!--           <object class="GtkLabel" id="label3"> -->
-                <!--             <property name="label">Closed</property> -->
-                <!--           </object> -->
-                <!--         </child> -->
+                <!--       <object class="GtkEntry" id="description_entry"> -->
+                <!--         <layout> -->
+                <!--           <property name="column">1</property> -->
+                <!--           <property name="row">0</property> -->
+                <!--           <property name="row-span">1</property> -->
+                <!--           <property name="column-span">1</property> -->
+                <!--         </layout> -->
                 <!--       </object> -->
                 <!--     </child> -->
                 <!--   </object> -->
                 <!-- </child> -->
 
               </object>
-            </child>
-
-            <!-- OLD MAIN SCREEN -->
-            <!-- <child> -->
-            <!--   <object class="GtkGrid" id="main_screen"> -->
-            <!--     <child> -->
-            <!--       <object class="GtkLabel" id="label1"> -->
-            <!--         <property name="label">Description</property> -->
-            <!--         <layout> -->
-            <!--           <property name="column">0</property> -->
-            <!--           <property name="row">0</property> -->
-            <!--           <property name="row-span">1</property> -->
-            <!--           <property name="column-span">1</property> -->
-            <!--         </layout> -->
-            <!--       </object> -->
-            <!--     </child> -->
-
-            <!--     <child> -->
-            <!--       <object class="GtkEntry" id="description_entry"> -->
-            <!--         <layout> -->
-            <!--           <property name="column">1</property> -->
-            <!--           <property name="row">0</property> -->
-            <!--           <property name="row-span">1</property> -->
-            <!--           <property name="column-span">1</property> -->
-            <!--         </layout> -->
-            <!--       </object> -->
-            <!--     </child> -->
-            <!--   </object> -->
-            <!-- </child> -->
-
+            </property>
           </object>
         </property>
       </object>
