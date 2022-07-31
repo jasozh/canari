@@ -23,6 +23,8 @@
         "*.a"
     ],
     "modules" : [
+	"python3-beautifulsoup4.json",
+	"python3-requests.json",
         {
             "name" : "canari",
             "builddir" : true,

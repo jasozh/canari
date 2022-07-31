@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from gi.repository import Gtk, Adw
-from .tmpdata import course_data
+from .webscraper import WebScraper
 
 
 @Gtk.Template(resource_path='/com/github/jasozh/Canari/window.ui')
@@ -31,9 +31,11 @@ class CanariWindow(Gtk.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.show_content(course_data)
-        self.show_tracked_courses(course_data)
-        self.show_tracked_courses(course_data)
+        scraper = WebScraper()
+
+        self.show_content(scraper.course_list)
+        self.show_tracked_courses(scraper.course_list)
+        self.show_tracked_courses(scraper.course_list)
 
     def show_content(self, course_list: list) -> None:
         """
@@ -60,8 +62,9 @@ class CanariWindow(Gtk.ApplicationWindow):
         if len(self.course_list_box_children) > 0:
             for child in self.course_list_box_children:
                 self.course_list_box.remove(child)
-                print('Removed child')
+                # print('Removed child')
 
+        # Add new children from course_list
         for item in course_list:
             course_row = Adw.ActionRow()
 
@@ -72,7 +75,7 @@ class CanariWindow(Gtk.ApplicationWindow):
                 course_row.set_icon_name('software-update-urgent-symbolic')
 
             # title
-            course_row.set_title(item['name'])
+            course_row.set_title(f"{item['subject']} {item['class_num']} {item['label']}")
             if (item['status'] == 'open'):
                 course_row.set_css_classes(['heading'])
 
@@ -81,10 +84,10 @@ class CanariWindow(Gtk.ApplicationWindow):
 
             # child
             status_label = Gtk.Label()
-            if (item['status'] == 'closed'):
-                status_label.set_label(item['status'].title())
-            elif (item['status'] == 'open'):
+            if (item['status'] == 'open'):
                 status_label.set_label(item['status'].upper())
+            else:
+                status_label.set_label(item['status'].title())
 
             course_row.add_suffix(status_label)
             # course_row.add_prefix(Gtk.Button(label="Test", icon_name="open-menu-symbolic"))
