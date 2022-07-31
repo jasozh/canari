@@ -73,7 +73,7 @@ class WebScraper():
                 course['prev_status'] = course['status']
 
                 # Update status
-                course['status'] = get_course_status(course)
+                course['status'] = self.get_course_status(course)
 
                 # Update last_update
                 now = datetime.datetime.now()

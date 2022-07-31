@@ -42,19 +42,30 @@ class CanariWindow(Gtk.ApplicationWindow):
         Common.create_action(self, 'refresh', self.on_refresh_action)
 
         # Initialize the web scraper with the course list read from the user dir
-        scraper = WebScraper(self.read_courses_from_user_dir())
+        self.scraper = WebScraper(self.read_courses_from_user_dir())
+
+        # Add persistent timer to refresh content every 10 minutes (600 sec)
+        GLib.timeout_add_seconds(600, self.refresh_courses)
 
         # Initialize screen
-        self.show_content(scraper.course_list)
-        self.show_tracked_courses(scraper.course_list)
+        self.show_content(self.scraper.course_list)
+        self.show_tracked_courses(self.scraper.course_list)
 
         # self.save_courses_to_user_dir(scraper.course_list)
 
     def on_refresh_action(self, widget, _) -> None:
+        """Callback for the win.refresh action."""
+        self.refresh_courses()
+
+    def refresh_courses(self) -> bool:
         """
-        Refreshes course statuses in course_list
+        Refreshes course statuses in course_list. Returns True to facilitate
+        GLib.timeout_add_seconds()
         """
-        print('refresh')
+        self.scraper.update_course_list()
+        self.show_tracked_courses(self.scraper.course_list)
+
+        return True
 
     def show_content(self, course_list: list) -> None:
         """
@@ -77,11 +88,13 @@ class CanariWindow(Gtk.ApplicationWindow):
         The properties of the AdwActionRow are instantiated in the following order:
             icon-name, title, subtitle, child
         """
-        # Remove all existing children of course_list_box
+        # Remove all existing children of course_list_box, reset course_list_box_children
         if len(self.course_list_box_children) > 0:
             for child in self.course_list_box_children:
                 self.course_list_box.remove(child)
                 # print('Removed child')
+
+            self.course_list_box_children = []
 
         # Add new children from course_list
         for item in course_list:
@@ -99,7 +112,8 @@ class CanariWindow(Gtk.ApplicationWindow):
                 course_row.set_css_classes(['heading'])
 
             # subtitle
-            course_row.set_subtitle(f'Last updated at {item["last_update"]}.')
+            # course_row.set_subtitle(f"Last updated at {item['last_update']}.")
+            course_row.set_subtitle(f"Last updated at {item['last_update']} ({item['prev_status']}).")
 
             # child
             status_label = Gtk.Label()
