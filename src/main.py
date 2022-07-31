@@ -23,7 +23,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import CanariWindow, AboutDialog
-
+from .common import Common
 
 class CanariApplication(Adw.Application):
     """The main application singleton class."""
@@ -31,9 +31,15 @@ class CanariApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id='com.github.jasozh.Canari',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
-        self.create_action('quit', self.quit, ['<primary>q'])
-        self.create_action('about', self.on_about_action)
-        self.create_action('preferences', self.on_preferences_action)
+
+        # App actions
+        Common.create_action(self, 'quit', self.on_quit_action)
+        Common.create_action(self, 'about', self.on_about_action)
+        Common.create_action(self, 'preferences', self.on_preferences_action)
+
+        # App shortcuts
+        self.set_accels_for_action("app.quit", ['<primary>q'])
+        self.set_accels_for_action("win.refresh", ['<primary>r'])
 
     def do_activate(self):
         """Called when the application is activated.
@@ -46,6 +52,10 @@ class CanariApplication(Adw.Application):
             win = CanariWindow(application=self)
         win.present()
 
+    def on_quit_action(self, widget, _):
+        """Callback for the app.quit action."""
+        self.quit()
+
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""
         about = AboutDialog(self.props.active_window)
@@ -55,20 +65,20 @@ class CanariApplication(Adw.Application):
         """Callback for the app.preferences action."""
         print('app.preferences action activated')
 
-    def create_action(self, name, callback, shortcuts=None):
-        """Add an application action.
+    # def create_action(self, name, callback, shortcuts=None):
+    #     """Add an application action.
 
-        Args:
-            name: the name of the action
-            callback: the function to be called when the action is
-              activated
-            shortcuts: an optional list of accelerators
-        """
-        action = Gio.SimpleAction.new(name, None)
-        action.connect("activate", callback)
-        self.add_action(action)
-        if shortcuts:
-            self.set_accels_for_action(f"app.{name}", shortcuts)
+    #     Args:
+    #         name: the name of the action
+    #         callback: the function to be called when the action is
+    #           activated
+    #         shortcuts: an optional list of accelerators
+    #     """
+    #     action = Gio.SimpleAction.new(name, None)
+    #     action.connect("activate", callback)
+    #     self.add_action(action)
+    #     if shortcuts:
+    #         self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
 def main(version):

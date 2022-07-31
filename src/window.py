@@ -17,6 +17,7 @@
 
 from gi.repository import Gtk, Adw, GLib, Gio
 from .webscraper import WebScraper
+from .common import Common
 
 import json
 
@@ -25,21 +26,35 @@ import json
 class CanariWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'CanariWindow'
 
-    welcome_screen = Gtk.Template.Child()
-    main_screen = Gtk.Template.Child()
-    course_list_box = Gtk.Template.Child()
+    # UI component bindings
+    welcome_screen         = Gtk.Template.Child()
+    main_screen            = Gtk.Template.Child()
+    add_course_button      = Gtk.Template.Child()
+    refresh_courses_button = Gtk.Template.Child()
+    course_list_box        = Gtk.Template.Child()
+
     course_list_box_children = []
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        # Window actions
+        Common.create_action(self, 'refresh', self.on_refresh_action)
+
         # Initialize the web scraper with the course list read from the user dir
         scraper = WebScraper(self.read_courses_from_user_dir())
 
+        # Initialize screen
         self.show_content(scraper.course_list)
         self.show_tracked_courses(scraper.course_list)
 
         # self.save_courses_to_user_dir(scraper.course_list)
+
+    def on_refresh_action(self, widget, _) -> None:
+        """
+        Refreshes course statuses in course_list
+        """
+        print('refresh')
 
     def show_content(self, course_list: list) -> None:
         """

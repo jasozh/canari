@@ -30,6 +30,7 @@ canari_sources = [
   'main.py',
   'window.py',
   'webscraper.py',
+  'common.py',
   'tmpdata.py'
 ]
 
