@@ -128,30 +128,6 @@ class CanariWindow(Gtk.ApplicationWindow):
             self.course_list_box.append(course_row)
             self.course_list_box_children.append(course_row)
 
-    # def get_data_file(self) -> Gio.File:
-    #     """
-    #     Returns a Gio.File object for course_list.json stored in the user data directory
-    #     """
-    #     data_dir = GLib.get_user_data_dir()
-    #     destination = GLib.build_filenamev([data_dir, 'canari', 'course_data.json'])
-    #     destinationFile = Gio.File.new_for_path(destination)
-
-    #     return destinationFile
-
-    # def read_courses_from_user_dir(self) -> list:
-    #     """
-    #     Returns a course list after reading from a JSON file in the user data directory
-    #     """
-    #     destinationFile = self.get_data_file()
-    #     success, contents, tag = destinationFile.load_contents(None)
-    #     json_data = contents.decode()
-    #     course_list = json.loads(json_data)
-
-    #     print(course_list)
-    #     print('Data successfully loaded')
-
-    #     return course_list
-
 
 class AboutDialog(Gtk.AboutDialog):
     def __init__(self, parent):
@@ -210,32 +186,7 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
             'prev_status': 'unknown',
             'last_update': 'unknown'
         }
-        print(course)
-        print(self.scraper.course_list)
+
+        self.scraper.add_course(course)
+
         self.destroy()
-
-    def save_courses_to_user_dir(self, course_list: list) -> None:
-        """
-        Saves course_list as a JSON file to the user data directory:
-            /home/<username>/.local/share/canari/course_data.json
-            /home/<username>/.var/app/com.github.jasozh.Canari/data/canari/course_data.json
-        """
-        json_data = json.dumps(course_list, indent = 2)
-        print(json_data)
-        destinationFile = self.get_data_file()
-
-        # Permissions for any created directories
-        # 744 in octal notation means read/write/execute permission for owner,
-        # read permissions only for group and world
-        PERMISSIONS_MODE = 0o744
-
-        # Creates directories along the way to the destination path file
-        if (GLib.mkdir_with_parents(destinationFile.get_parent().get_path(), PERMISSIONS_MODE) == 0):
-            success, tag = destinationFile.replace_contents(bytearray(json_data, 'utf-8'), None, False, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
-
-            if success:
-                print("Data successfully saved!")
-            else:
-                print('Error occurred when saving data')
-        else:
-            print('Error when creating directories for destination file')

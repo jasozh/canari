@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from gi.repository import GLib, Gio
+import copy as cp
 import json
 import time
 import datetime
@@ -28,10 +29,26 @@ class WebScraper():
     _course_list = []
 
     def __init__(self):
-        self._course_list = self.read_courses_from_user_dir()
+        self.read_courses_from_user_dir()
 
-    def get_course_list(self):
+    def get_course_list(self) -> list:
         return self._course_list
+
+    def add_course(self, course: dict) -> bool:
+        """
+        Given a course as a dict, adds to self._course_list and saves new course
+        to user data dir. Returns whether the operation has succeeded
+        """
+        new_dict = cp.deepcopy(course)
+
+        # If web scraper request passes, add to course_list, otherwise send error
+        if self.get_course_status(course):
+            self._course_list.append(new_dict)
+            self.save_courses_to_user_dir()
+            return True
+        else:
+            print('An error has occurred')
+            return False
 
     def get_course_status(self, course: dict) -> str:
         """
@@ -98,27 +115,25 @@ class WebScraper():
 
         return destinationFile
 
-    def read_courses_from_user_dir(self) -> list:
+    def read_courses_from_user_dir(self):
         """
         Returns a course list after reading from a JSON file in the user data directory
         """
         destinationFile = self.get_data_file()
         success, contents, tag = destinationFile.load_contents(None)
         json_data = contents.decode()
-        course_list = json.loads(json_data)
+        self._course_list = json.loads(json_data)
 
-        print(course_list)
+        print(self._course_list)
         print('Data successfully loaded')
 
-        return course_list
-
-    def save_courses_to_user_dir(self, course_list: list) -> None:
+    def save_courses_to_user_dir(self) -> None:
         """
         Saves course_list as a JSON file to the user data directory:
             /home/<username>/.local/share/canari/course_data.json
             /home/<username>/.var/app/com.github.jasozh.Canari/data/canari/course_data.json
         """
-        json_data = json.dumps(course_list, indent = 2)
+        json_data = json.dumps(self._course_list, indent = 2)
         print(json_data)
         destinationFile = self.get_data_file()
 

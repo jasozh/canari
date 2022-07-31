@@ -4,7 +4,7 @@
   <requires lib="Adw" version="1.1"/>
   <template class="CourseEditorDialog" parent="GtkApplicationWindow">
     <property name="default-width">450</property>
-    <property name="default-height">500</property>
+    <property name="default-height">400</property>
     <!-- <property name="use_header_bar">1</property> -->
     <property name="destroy_with_parent">True</property>
     <property name="modal">True</property>
@@ -58,23 +58,13 @@
               <object class="GtkBox" id="main_screen">
                 <property name="orientation">vertical</property>
 
-                <!-- HEADER -->
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label">Tracked Courses</property>
-                    <property name="css-classes">heading</property>
-                    <property name="halign">start</property>
-                    <property name="margin-bottom">12</property>
-                    <property name="margin-top">24</property>
-                  </object>
-                </child>
-
                 <!-- GTK LIST BOX -->
                 <child>
                   <object class="GtkListBox" id='user_list_box'>
                     <property name="selection-mode">none</property>
                     <property name="width-request">420</property>
-                    <property name="margin-bottom">24</property>
+                    <property name="margin-top">12</property>
+                    <property name="margin-bottom">12</property>
                     <style>
                       <class name="boxed-list"/>
                     </style>
@@ -83,6 +73,7 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title">Subject</property>
+                        <property name="focusable">false</property>
                         <child>
                           <object class="GtkBox">
                             <property name="margin-top">8</property>
@@ -101,6 +92,7 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title">Course Number</property>
+                        <property name="focusable">false</property>
                         <child>
                           <object class="GtkBox">
                             <property name="margin-top">8</property>
@@ -119,6 +111,7 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title">Semester</property>
+                        <property name="focusable">false</property>
                         <child>
                           <object class="GtkBox">
                             <property name="margin-top">8</property>
@@ -137,6 +130,7 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title">Label</property>
+                        <property name="focusable">false</property>
                         <child>
                           <object class="GtkBox">
                             <property name="margin-top">8</property>
@@ -155,6 +149,7 @@
                     <child>
                       <object class="AdwActionRow">
                         <property name="title">Course ID</property>
+                        <property name="focusable">false</property>
                         <child>
                           <object class="GtkBox">
                             <property name="margin-top">8</property>
