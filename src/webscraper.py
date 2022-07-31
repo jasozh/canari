@@ -3,13 +3,13 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from .tmpdata import course_data
+# from .tmpdata import course_data
 
 class WebScraper():
     course_list = []
 
-    def __init__(self):
-        self.course_list = course_data
+    def __init__(self, data):
+        self.course_list = data
 
     def get_course_status(self, course: dict) -> str:
         """

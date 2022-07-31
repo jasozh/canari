@@ -33,14 +33,13 @@ class CanariWindow(Gtk.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        scraper = WebScraper()
+        # Initialize the web scraper with the course list read from the user dir
+        scraper = WebScraper(self.read_courses_from_user_dir())
 
         self.show_content(scraper.course_list)
         self.show_tracked_courses(scraper.course_list)
-        self.show_tracked_courses(scraper.course_list)
 
         # self.save_courses_to_user_dir(scraper.course_list)
-        self.read_courses_from_user_dir()
 
     def show_content(self, course_list: list) -> None:
         """
