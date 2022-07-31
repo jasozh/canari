@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.1"/>
+  <template class="CourseEditorDialog" parent="GtkApplicationWindow">
+    <property name="default-width">450</property>
+    <property name="default-height">500</property>
+    <!-- <property name="use_header_bar">1</property> -->
+    <property name="destroy_with_parent">True</property>
+    <property name="modal">True</property>
+    <property name="hide-on-close">True</property>
+    <property name="title">Add course</property>
+
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="titlebar">
+        <property name="show-title-buttons">False</property>
+
+        <!-- CANCEL BUTTON -->
+        <child>
+          <object class="GtkButton" id="cancel_button">
+            <property name="label" translatable="yes">Cancel</property>
+            <property name="action-name">win.destroy</property>
+          </object>
+        </child>
+
+        <!-- DONE BUTTON -->
+        <child type="end">
+          <object class="GtkButton" id="done_button">
+            <property name="label" translatable="yes">Done</property>
+            <property name="action-name">win.save</property>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <!-- GTK SCROLLED WINDOW -->
+      <object class="GtkScrolledWindow">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+
+        <!-- GTK BOX -->
+        <property name="child">
+          <object class="GtkBox">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+            <property name="halign">center</property>
+            <property name="orientation">vertical</property>
+
+            <!-- ENTRY SCREEN -->
+            <child>
+              <object class="GtkBox" id="main_screen">
+                <property name="orientation">vertical</property>
+
+                <!-- HEADER -->
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Tracked Courses</property>
+                    <property name="css-classes">heading</property>
+                    <property name="halign">start</property>
+                    <property name="margin-bottom">12</property>
+                    <property name="margin-top">24</property>
+                  </object>
+                </child>
+
+                <!-- GTK LIST BOX -->
+                <child>
+                  <object class="GtkListBox" id='user_list_box'>
+                    <property name="selection-mode">none</property>
+                    <property name="width-request">420</property>
+                    <property name="margin-bottom">24</property>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+
+                    <!-- SUBJECT -->
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Subject</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">8</property>
+                            <property name="margin-bottom">8</property>
+                            <child>
+                              <object class="GtkEntry" id="subject">
+                                <property name="placeholder-text">FREN</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- COURSE NUMBER -->
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Course Number</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">8</property>
+                            <property name="margin-bottom">8</property>
+                            <child>
+                              <object class="GtkEntry" id="course_num">
+                                <property name="placeholder-text">2090</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- SEMESTER -->
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Semester</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">8</property>
+                            <property name="margin-bottom">8</property>
+                            <child>
+                              <object class="GtkEntry" id="semester">
+                                <property name="placeholder-text">FA22</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- LABEL -->
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Label</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">8</property>
+                            <property name="margin-bottom">8</property>
+                            <child>
+                              <object class="GtkEntry" id="label">
+                                <property name="placeholder-text">SEM 102</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- COURSE ID -->
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title">Course ID</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">8</property>
+                            <property name="margin-bottom">8</property>
+                            <child>
+                              <object class="GtkEntry" id="course_id">
+                                <property name="placeholder-text">4677</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+
+
+    <!-- <child> -->
+    <!--   <object class="GtkBox"> -->
+    <!--     <child> -->
+    <!--       <object class="AdwPreferencesPage"> -->
+    <!--         <property name="vexpand">True</property> -->
+
+            <!-- Summary -->
+    <!--         <child> -->
+    <!--           <object class="AdwPreferencesGroup"> -->
+    <!--             <child> -->
+    <!--               <object class="GcalSummarySection" id="summary_section"> -->
+    <!--                 <property name="sensitive" bind-source="GcalEventEditorDialog" bind-property="writable" bind-flags="default" /> -->
+    <!--               </object> -->
+    <!--             </child> -->
+    <!--           </object> -->
+    <!--         </child> -->
+
+            <!-- Schedule -->
+    <!--         <child> -->
+    <!--           <object class="AdwPreferencesGroup"> -->
+    <!--             <property name="title" translatable="yes">Schedule</property> -->
+    <!--             <child> -->
+    <!--               <object class="GcalScheduleSection" id="schedule_section"> -->
+    <!--                 <property name="sensitive" bind-source="GcalEventEditorDialog" bind-property="writable" bind-flags="default" /> -->
+    <!--               </object> -->
+    <!--             </child> -->
+    <!--           </object> -->
+    <!--         </child> -->
+
+            <!-- Reminders -->
+    <!--         <child> -->
+    <!--           <object class="AdwPreferencesGroup"> -->
+    <!--             <property name="title" translatable="yes">Reminders</property> -->
+    <!--             <child> -->
+    <!--               <object class="GcalRemindersSection" id="reminders_section"> -->
+    <!--                 <property name="sensitive" bind-source="GcalEventEditorDialog" bind-property="writable" bind-flags="default" /> -->
+    <!--               </object> -->
+    <!--             </child> -->
+    <!--           </object> -->
+    <!--         </child> -->
+
+            <!-- Notes -->
+    <!--         <child> -->
+    <!--           <object class="AdwPreferencesGroup"> -->
+    <!--             <property name="title" translatable="yes">Notes</property> -->
+    <!--             <child> -->
+    <!--               <object class="GcalNotesSection" id="notes_section"> -->
+    <!--                 <property name="sensitive" bind-source="GcalEventEditorDialog" bind-property="writable" bind-flags="default" /> -->
+    <!--               </object> -->
+    <!--             </child> -->
+    <!--           </object> -->
+    <!--         </child> -->
+
+            <!-- Delete Button -->
+    <!--         <child> -->
+    <!--           <object class="AdwPreferencesGroup"> -->
+    <!--             <child> -->
+    <!--               <object class="GtkButton" id="delete_button"> -->
+    <!--                 <property name="halign">end</property> -->
+    <!--                 <signal name="clicked" handler="on_delete_button_clicked_cb" object="GcalEventEditorDialog" swapped="no"/> -->
+    <!--                 <property name="sensitive" bind-source="GcalEventEditorDialog" bind-property="writable" bind-flags="default" /> -->
+    <!--                 <child> -->
+    <!--                   <object class="GtkLabel" id="delete_label"> -->
+    <!--                     <property name="label" translatable="yes">Delete Event</property> -->
+    <!--                   </object> -->
+    <!--                 </child> -->
+    <!--                 <style> -->
+    <!--                   <class name="destructive-action"/> -->
+    <!--                 </style> -->
+    <!--               </object> -->
+    <!--             </child> -->
+    <!--           </object> -->
+    <!--         </child> -->
+
+    <!--       </object> -->
+    <!--     </child> -->
+    <!--   </object> -->
+    <!-- </child> -->
+  </template>
+</interface>

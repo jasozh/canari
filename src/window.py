@@ -35,21 +35,21 @@ class CanariWindow(Gtk.ApplicationWindow):
 
     course_list_box_children = []
 
-    def __init__(self, **kwargs):
+    def __init__(self, scraper, **kwargs):
         super().__init__(**kwargs)
 
         # Window actions
         Common.create_action(self, 'refresh', self.on_refresh_action)
 
-        # Initialize the web scraper with the course list read from the user dir
-        self.scraper = WebScraper(self.read_courses_from_user_dir())
+        # Initialize the web scraper
+        self.scraper = scraper
 
         # Add persistent timer to refresh content every 10 minutes (600 sec)
         GLib.timeout_add_seconds(600, self.refresh_courses)
 
         # Initialize screen
-        self.show_content(self.scraper.course_list)
-        self.show_tracked_courses(self.scraper.course_list)
+        self.show_content(self.scraper.get_course_list())
+        self.show_tracked_courses(self.scraper.get_course_list())
 
         # self.save_courses_to_user_dir(scraper.course_list)
 
@@ -63,7 +63,7 @@ class CanariWindow(Gtk.ApplicationWindow):
         GLib.timeout_add_seconds()
         """
         self.scraper.update_course_list()
-        self.show_tracked_courses(self.scraper.course_list)
+        self.show_tracked_courses(self.scraper.get_course_list())
 
         return True
 
@@ -107,7 +107,7 @@ class CanariWindow(Gtk.ApplicationWindow):
                 course_row.set_icon_name('software-update-urgent-symbolic')
 
             # title
-            course_row.set_title(f"{item['subject']} {item['class_num']} {item['label']}")
+            course_row.set_title(f"{item['subject']} {item['course_num']} {item['label']}")
             if (item['status'] == 'open'):
                 course_row.set_css_classes(['heading'])
 
@@ -128,29 +128,91 @@ class CanariWindow(Gtk.ApplicationWindow):
             self.course_list_box.append(course_row)
             self.course_list_box_children.append(course_row)
 
-    def get_data_file(self) -> Gio.File:
-        """
-        Returns a Gio.File object for course_list.json stored in the user data directory
-        """
-        data_dir = GLib.get_user_data_dir()
-        destination = GLib.build_filenamev([data_dir, 'canari', 'course_data.json'])
-        destinationFile = Gio.File.new_for_path(destination)
+    # def get_data_file(self) -> Gio.File:
+    #     """
+    #     Returns a Gio.File object for course_list.json stored in the user data directory
+    #     """
+    #     data_dir = GLib.get_user_data_dir()
+    #     destination = GLib.build_filenamev([data_dir, 'canari', 'course_data.json'])
+    #     destinationFile = Gio.File.new_for_path(destination)
 
-        return destinationFile
+    #     return destinationFile
 
-    def read_courses_from_user_dir(self) -> list:
-        """
-        Returns a course list after reading from a JSON file in the user data directory
-        """
-        destinationFile = self.get_data_file()
-        success, contents, tag = destinationFile.load_contents(None)
-        json_data = contents.decode()
-        course_list = json.loads(json_data)
+    # def read_courses_from_user_dir(self) -> list:
+    #     """
+    #     Returns a course list after reading from a JSON file in the user data directory
+    #     """
+    #     destinationFile = self.get_data_file()
+    #     success, contents, tag = destinationFile.load_contents(None)
+    #     json_data = contents.decode()
+    #     course_list = json.loads(json_data)
 
-        print(course_list)
-        print('Data successfully loaded')
+    #     print(course_list)
+    #     print('Data successfully loaded')
 
-        return course_list
+    #     return course_list
+
+
+class AboutDialog(Gtk.AboutDialog):
+    def __init__(self, parent):
+        Gtk.AboutDialog.__init__(self)
+        self.props.program_name = 'canari'
+        self.props.version = "0.1.0"
+        self.props.authors = ['Jason Zheng']
+        self.props.copyright = '2022 Jason Zheng'
+        self.props.logo_icon_name = 'com.github.jasozh.Canari'
+        self.props.modal = True
+        self.set_transient_for(parent)
+
+@Gtk.Template(resource_path='/com/github/jasozh/Canari/course-editor-dialog.ui')
+class CourseEditorDialog(Gtk.ApplicationWindow):
+    __gtype_name__ = 'CourseEditorDialog'
+
+    # UI component bindings
+    user_list_box = Gtk.Template.Child()
+    subject       = Gtk.Template.Child()
+    course_num    = Gtk.Template.Child()
+    semester      = Gtk.Template.Child()
+    label         = Gtk.Template.Child()
+    course_id     = Gtk.Template.Child()
+
+    def __init__(self, parent, scraper):
+        super().__init__()
+        self.set_transient_for(parent)
+
+        # Window actions
+        Common.create_action(self, 'destroy', self.on_destroy_action)
+        Common.create_action(self, 'save', self.on_save_action)
+
+        # Initialize the web scraper
+        self.scraper = scraper
+
+    def on_destroy_action(self, widget, _) -> None:
+        """Callback for the win.destroy action."""
+        self.destroy()
+
+    def on_save_action(self, widget, _) -> None:
+        """Callback for the win.save action."""
+        subject    = self.subject.get_buffer().get_text()
+        course_num = self.course_num.get_buffer().get_text()
+        semester   = self.semester.get_buffer().get_text()
+        label      = self.label.get_buffer().get_text()
+        course_id  = self.course_id.get_buffer().get_text()
+
+        course = {
+            'subject': subject,
+            'course_num': course_num,
+            'semester': semester,
+            'label': label,
+            'course_id': course_id,
+            'url': f'https://classes.cornell.edu/browse/roster/{semester}/class/{subject}/{course_num}',
+            'status': 'closed',
+            'prev_status': 'unknown',
+            'last_update': 'unknown'
+        }
+        print(course)
+        print(self.scraper.course_list)
+        self.destroy()
 
     def save_courses_to_user_dir(self, course_list: list) -> None:
         """
@@ -177,16 +239,3 @@ class CanariWindow(Gtk.ApplicationWindow):
                 print('Error occurred when saving data')
         else:
             print('Error when creating directories for destination file')
-
-
-class AboutDialog(Gtk.AboutDialog):
-
-    def __init__(self, parent):
-        Gtk.AboutDialog.__init__(self)
-        self.props.program_name = 'canari'
-        self.props.version = "0.1.0"
-        self.props.authors = ['Jason Zheng']
-        self.props.copyright = '2022 Jason Zheng'
-        self.props.logo_icon_name = 'com.github.jasozh.Canari'
-        self.props.modal = True
-        self.set_transient_for(parent)

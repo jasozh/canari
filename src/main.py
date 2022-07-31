@@ -22,8 +22,9 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
-from .window import CanariWindow, AboutDialog
+from .window import CanariWindow, AboutDialog, CourseEditorDialog
 from .common import Common
+from .webscraper import WebScraper
 
 class CanariApplication(Adw.Application):
     """The main application singleton class."""
@@ -36,10 +37,14 @@ class CanariApplication(Adw.Application):
         Common.create_action(self, 'quit', self.on_quit_action)
         Common.create_action(self, 'about', self.on_about_action)
         Common.create_action(self, 'preferences', self.on_preferences_action)
+        Common.create_action(self, 'add', self.on_add_action)
 
         # App shortcuts
         self.set_accels_for_action("app.quit", ['<primary>q'])
         self.set_accels_for_action("win.refresh", ['<primary>r'])
+
+        # Initialize web scraper
+        self.scraper = WebScraper()
 
     def do_activate(self):
         """Called when the application is activated.
@@ -49,8 +54,12 @@ class CanariApplication(Adw.Application):
         """
         win = self.props.active_window
         if not win:
-            win = CanariWindow(application=self)
+            win = CanariWindow(self.scraper, application=self)
         win.present()
+
+    def on_add_action(self, widget, _):
+        dialog = CourseEditorDialog(self.props.active_window, self.scraper)
+        dialog.present()
 
     def on_quit_action(self, widget, _):
         """Callback for the app.quit action."""

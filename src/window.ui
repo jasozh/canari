@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.1"/>
   <template class="CanariWindow" parent="GtkApplicationWindow">
     <property name="default-width">800</property>
     <property name="default-height">600</property>
@@ -12,6 +13,7 @@
           <object class="GtkButton" id="add_course_button">
             <property name="icon-name">list-add-symbolic</property>
             <property name="tooltip-text">Add course</property>
+            <property name="action-name">app.add</property>
           </object>
         </child>
         <child type="end">

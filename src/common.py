@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gio
+from gi.repository import GLib, Gio
+import json
 
 class Common():
     """Common methods shared by the application and its windows"""

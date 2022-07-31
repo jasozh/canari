@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/com/github/jasozh/Canari">
     <file>window.ui</file>
+    <file>course-editor-dialog.ui</file>
     <file>gtk/help-overlay.ui</file>
   </gresource>
 </gresources>

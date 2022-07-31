@@ -1,7 +1,7 @@
 course_data = [
     {
         'subject': 'FREN',
-        'class_num': '2090',
+        'course_num': '2090',
         'semester': 'FA22',
         'label': 'SEM 102',
         'course_id': '4677',
