@@ -146,6 +146,7 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
 
     # UI component bindings
     user_list_box = Gtk.Template.Child()
+    toast_overlay = Gtk.Template.Child()
     subject       = Gtk.Template.Child()
     course_num    = Gtk.Template.Child()
     semester      = Gtk.Template.Child()
@@ -187,6 +188,7 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
             'last_update': 'unknown'
         }
 
-        self.scraper.add_course(course)
-
-        self.destroy()
+        if self.scraper.add_course(course):
+            self.destroy()
+        else:
+            self.toast_overlay.add_toast(Adw.Toast(title=f"Invalid course data, please try again"))
