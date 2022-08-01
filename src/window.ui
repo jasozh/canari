@@ -31,7 +31,7 @@
           </object>
         </child>
         <child type="end">
-          <object class="GtkButton" id="select_courses_button">
+          <object class="GtkToggleButton" id="select_courses_button">
             <property name="icon-name">selection-mode-symbolic</property>
             <property name="tooltip-text">Select courses</property>
             <property name="action-name">win.select</property>
@@ -70,23 +70,25 @@
                 <!-- WELCOME PAGE -->
                 <child>
                   <object class="AdwStatusPage" id="welcome_screen">
-                    <property name="title">My App</property>
-                    <property name="description">My App is awesome</property>
-                    <property name="icon-name">applications-science-symbolic</property>
+                    <property name="title">Welcome to Canari</property>
+                    <property name="description">Add a course to start tracking</property>
+                    <property name="icon-name">emblem-documents-symbolic</property>
                     <property name="vexpand">true</property>
+                    <property name="hexpand">true</property>
+                    <property name="width-request">300</property>
                     <child>
                       <object class="GtkBox">
                         <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkLinkButton">
-                            <property name="label">API Reference</property>
-                            <property name="uri">https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.ApplicationWindow.html</property>
+                            <property name="label">Class Roster</property>
+                            <property name="uri">https://classes.cornell.edu/</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkLinkButton">
-                            <property name="label">Human Interface Guidelines</property>
-                            <property name="uri">https://developer.gnome.org/hig/patterns/containers/windows.html</property>
+                            <property name="label">Scheduler</property>
+                            <property name="uri">https://classes.cornell.edu/scheduler/</property>
                           </object>
                         </child>
                         <layout>
@@ -228,10 +230,10 @@
 
   <menu id="primary_menu">
     <section>
-      <item>
-        <attribute name="label" translatable="yes">_Preferences</attribute>
-        <attribute name="action">app.preferences</attribute>
-      </item>
+      <!-- <item> -->
+      <!--   <attribute name="label" translatable="yes">_Preferences</attribute> -->
+      <!--   <attribute name="action">app.preferences</attribute> -->
+      <!-- </item> -->
       <item>
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">win.show-help-overlay</attribute>

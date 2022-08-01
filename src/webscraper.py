@@ -48,7 +48,6 @@ class WebScraper():
             self.save_courses_to_user_dir()
             return True
         else:
-            print('An error has occurred')
             return False
 
     def delete_course(self, index) -> bool:
@@ -102,9 +101,10 @@ class WebScraper():
         except Exception as err:
             print(f'Exception thrown: {err}')
 
-    def update_course_list(self) -> None:
+    def update_course_list(self) -> bool:
         """
-        Iterates through course_list and updates status and last_update for each course
+        Iterates through course_list and updates status and last_update for each course.
+        Returns whether the operation succeeded
         """
         print('Updating course list')
 
@@ -127,9 +127,11 @@ class WebScraper():
                                         f"The course was previously {course['prev_status']}.",
                                         "dialog-information")
 
+            return True
 
         except Exception as err:
             print(f'Exception thrown: {err}')
+            return False
 
     def get_data_file(self) -> Gio.File:
         """
@@ -141,19 +143,27 @@ class WebScraper():
 
         return destinationFile
 
-    def read_courses_from_user_dir(self):
+    def read_courses_from_user_dir(self) -> bool:
         """
-        Returns a course list after reading from a JSON file in the user data directory
+        Returns a course list after reading from a JSON file in the user data directory.
+        Returns whether the operation succeeded
         """
-        destinationFile = self.get_data_file()
-        success, contents, tag = destinationFile.load_contents(None)
-        json_data = contents.decode()
-        self._course_list = json.loads(json_data)
+        try:
+            destinationFile = self.get_data_file()
+            success, contents, tag = destinationFile.load_contents(None)
+            json_data = contents.decode()
+            self._course_list = json.loads(json_data)
 
-        print(self._course_list)
-        print('Data successfully loaded')
+            print(self._course_list)
+            print('Data successfully loaded')
 
-    def save_courses_to_user_dir(self) -> None:
+            return True
+
+        except Exception as err:
+            print(err)
+            return False
+
+    def save_courses_to_user_dir(self) -> bool:
         """
         Saves course_list as a JSON file to the user data directory:
             /home/<username>/.local/share/canari/course_data.json
@@ -174,8 +184,11 @@ class WebScraper():
 
             if success:
                 print("Data successfully saved!")
+                return True
             else:
                 print('Error occurred when saving data')
+                return False
         else:
             print('Error when creating directories for destination file')
+            return False
 

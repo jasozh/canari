@@ -53,8 +53,7 @@ class CanariWindow(Gtk.ApplicationWindow):
         GLib.timeout_add_seconds(600, self.refresh_courses)
 
         # Initialize screen
-        self.show_content(self.scraper.get_course_list())
-        self.show_tracked_courses(self.scraper.get_course_list())
+        self.refresh_courses(toast=False)
 
         # Initially hide the delete course button
         self.delete_course_button.hide()
@@ -66,10 +65,9 @@ class CanariWindow(Gtk.ApplicationWindow):
         row = self.course_list_box.get_selected_row()
         if (row):
             if (self.scraper.delete_course(self.course_list_box_children.index(row))):
-                self.refresh_courses()
+                self.refresh_courses(toast=False)
             else:
                 self.toast_overlay.add_toast(Adw.Toast(title=f"An error occurred while deleting the course"))
-
 
     def on_select_action(self, widget, _) -> None:
         """
@@ -80,40 +78,54 @@ class CanariWindow(Gtk.ApplicationWindow):
         if (mode == Gtk.SelectionMode.SINGLE):
             self.course_list_box.set_selection_mode(Gtk.SelectionMode.NONE)
             self.delete_course_button.hide()
-            self.select_courses_button.set_icon_name('selection-mode-symbolic')
-            self.select_courses_button.set_tooltip_text('Select courses')
+            self.select_courses_button.set_active(False)
         else:
             self.course_list_box.set_selection_mode(Gtk.SelectionMode.SINGLE)
             self.delete_course_button.show()
-            self.select_courses_button.set_icon_name('view-dual-symbolic')
-            self.select_courses_button.set_tooltip_text('View courses')
+            self.select_courses_button.set_active(True)
 
     def on_refresh_action(self, widget, _) -> None:
         """Callback for the win.refresh action."""
         self.refresh_courses()
 
-    def refresh_courses(self) -> bool:
+    def refresh_courses(self, toast=True) -> bool:
         """
         Refreshes course statuses in course_list. Returns True to facilitate
-        GLib.timeout_add_seconds()
+        GLib.timeout_add_seconds().
+
+        Args:
+            toast: a bool, whether or not to show a toast when refreshing
         """
-        self.scraper.update_course_list()
-        self.show_tracked_courses(self.scraper.get_course_list())
-        self.toast_overlay.add_toast(Adw.Toast(title=f"Courses refreshed"))
+        if (self.scraper.update_course_list()):
+            self.show_content(self.scraper.get_course_list())
+            self.show_tracked_courses(self.scraper.get_course_list())
+
+            if toast:
+                self.toast_overlay.add_toast(Adw.Toast(title=f"Courses refreshed"))
+        else:
+            self.toast_overlay.add_toast(Adw.Toast(title=f"Error occurred when refreshing courses"))
+            Common.notification("Refresh error", "Error occurred when refreshing courses", "dialog-warning")
 
         return True
 
     def show_content(self, course_list: list) -> None:
         """
         If course_list is empty, show the Welcome Screen. Otherwise, show the
-        Main Screen components
+        Main Screen components and relevant headerbar buttons.
         """
         if len(course_list) > 0:
             self.welcome_screen.hide()
+
             self.main_screen.show()
+            self.refresh_courses_button.show()
+            self.select_courses_button.show()
         else:
             self.welcome_screen.show()
+
             self.main_screen.hide()
+            self.refresh_courses_button.hide()
+            self.select_courses_button.hide()
+            self.delete_course_button.hide()
 
     def show_tracked_courses(self, course_list: list) -> None:
         """
@@ -148,7 +160,6 @@ class CanariWindow(Gtk.ApplicationWindow):
                 course_row.set_css_classes(['heading'])
 
             # subtitle
-            # course_row.set_subtitle(f"Last updated at {item['last_update']}.")
             course_row.set_subtitle(f"Last updated at {item['last_update']} ({item['prev_status']}).")
 
             # child
@@ -168,13 +179,14 @@ class CanariWindow(Gtk.ApplicationWindow):
 class AboutDialog(Gtk.AboutDialog):
     def __init__(self, parent):
         Gtk.AboutDialog.__init__(self)
-        self.props.program_name = 'canari'
+        self.props.program_name = 'Canari'
         self.props.version = "0.1.0"
         self.props.authors = ['Jason Zheng']
         self.props.copyright = '2022 Jason Zheng'
         self.props.logo_icon_name = 'com.github.jasozh.Canari'
         self.props.modal = True
         self.set_transient_for(parent)
+
 
 @Gtk.Template(resource_path='/com/github/jasozh/Canari/course-editor-dialog.ui')
 class CourseEditorDialog(Gtk.ApplicationWindow):
@@ -192,6 +204,8 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
     def __init__(self, parent, scraper):
         super().__init__()
         self.set_transient_for(parent)
+
+        self.parent = parent
 
         # Window actions
         Common.create_action(self, 'destroy', self.on_destroy_action)
@@ -226,5 +240,7 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
 
         if self.scraper.add_course(course):
             self.destroy()
+            # self.canari_window.refresh_courses()
+            self.parent.refresh_courses()
         else:
             self.toast_overlay.add_toast(Adw.Toast(title=f"Invalid course data, please try again"))
