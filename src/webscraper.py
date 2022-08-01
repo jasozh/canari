@@ -93,6 +93,8 @@ class WebScraper():
                 return 'open'
             elif (status == 'open-status-closed'):
                 return 'closed'
+            elif (status == 'open-status-warning'):
+                return 'waitlist'
             elif (status == 'open-status-archive'):
                 return 'archive'
             else:

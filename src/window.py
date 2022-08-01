@@ -149,10 +149,10 @@ class CanariWindow(Gtk.ApplicationWindow):
             course_row = Adw.ActionRow()
 
             # icon-name
-            if (item['status'] == 'closed'):
-                course_row.set_icon_name('dialog-error-symbolic')
-            elif (item['status'] == 'open'):
+            if (item['status'] == 'open'):
                 course_row.set_icon_name('software-update-urgent-symbolic')
+            else:
+                course_row.set_icon_name('dialog-error-symbolic')
 
             # title
             course_row.set_title(f"{item['subject']} {item['course_num']} {item['label']}")
