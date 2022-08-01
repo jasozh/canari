@@ -668,6 +668,50 @@
          result="shape"
          id="feBlend1061" />
     </filter>
+    <filter
+       id="filter0_d_8_55"
+       x="7.6730299"
+       y="21.657101"
+       width="123.968"
+       height="108.333"
+       filterUnits="userSpaceOnUse"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         flood-opacity="0"
+         result="BackgroundImageFix"
+         id="feFlood499" />
+      <feColorMatrix
+         in="SourceAlpha"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+         result="hardAlpha"
+         id="feColorMatrix501" />
+      <feOffset
+         dy="4"
+         id="feOffset503" />
+      <feGaussianBlur
+         stdDeviation="2"
+         id="feGaussianBlur505" />
+      <feComposite
+         in2="hardAlpha"
+         operator="out"
+         id="feComposite507" />
+      <feColorMatrix
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+         id="feColorMatrix509" />
+      <feBlend
+         mode="normal"
+         in2="BackgroundImageFix"
+         result="effect1_dropShadow_8_55"
+         id="feBlend511" />
+      <feBlend
+         mode="normal"
+         in="SourceGraphic"
+         in2="effect1_dropShadow_8_55"
+         result="shape"
+         id="feBlend513" />
+    </filter>
   </defs>
   <sodipodi:namedview
      stroke="#ef2929"
@@ -678,9 +722,9 @@
      borderopacity="0.25490196"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="174.125"
-     inkscape:cy="38.5"
+     inkscape:zoom="32"
+     inkscape:cx="169.95313"
+     inkscape:cy="26.5"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -2973,42 +3017,22 @@
        inkscape:groupmode="layer"
        id="layer13"
        inkscape:label="Symbolic"
-       style="display:inline;enable-background:new">
-      <g
-         id="g7522"
-         style="display:inline;enable-background:new">
-        <circle
-           cx="168.04269"
-           cy="179.96495"
-           r="7.8378458"
-           fill="#000000"
-           id="circle1037"
-           style="stroke-width:0.09221" />
-        <g
-           filter="url(#filter0_d_8_53)"
-           id="g1045"
-           transform="matrix(0.09220995,0,0,0.09220995,160.20484,172.1271)">
-          <ellipse
-             cx="96.921097"
-             cy="83.8237"
-             rx="41.5"
-             ry="52"
-             transform="rotate(-26,96.9211,83.8237)"
-             fill="#ffffff"
-             id="ellipse1039" />
-          <path
-             d="m 24.673,65.8415 34.9203,-8.7516 -1.5578,22.278 z"
-             fill="#ffffff"
-             id="path1041" />
-          <circle
-             cx="79.495102"
-             cy="59.501099"
-             r="6.5"
-             transform="rotate(-26,79.4951,59.5011)"
-             fill="#000000"
-             id="circle1043" />
-        </g>
-      </g>
+       style="display:inline;enable-background:new" />
+    <g
+       id="g885"
+       transform="matrix(0.13561584,0,0,0.13561584,146.85732,155.67437)">
+      <ellipse
+         cx="74.013092"
+         cy="236.08879"
+         rx="41.5"
+         ry="52"
+         transform="rotate(-26)"
+         fill="#000000"
+         id="ellipse770" />
+      <path
+         d="m 97.768976,161.7678 34.920274,-8.7516 -1.5578,22.2779 z"
+         fill="#000000"
+         id="path772" />
     </g>
     <g
        inkscape:groupmode="layer"
