@@ -3,8 +3,8 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.1"/>
   <template class="CanariWindow" parent="GtkApplicationWindow">
-    <property name="default-width">800</property>
-    <property name="default-height">600</property>
+    <property name="default-width">650</property>
+    <property name="default-height">550</property>
     <property name="title">Canari</property>
 
     <child type="titlebar">
@@ -28,6 +28,20 @@
             <property name="icon-name">view-refresh-symbolic</property>
             <property name="tooltip-text">Refresh (Ctrl+R)</property>
             <property name="action-name">win.refresh</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton" id="select_courses_button">
+            <property name="icon-name">selection-mode-symbolic</property>
+            <property name="tooltip-text">Select courses</property>
+            <property name="action-name">win.select</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton" id="delete_course_button">
+            <property name="icon-name">user-trash-symbolic</property>
+            <property name="tooltip-text">Delete course</property>
+            <property name="action-name">win.delete</property>
           </object>
         </child>
       </object>

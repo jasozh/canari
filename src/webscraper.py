@@ -51,6 +51,24 @@ class WebScraper():
             print('An error has occurred')
             return False
 
+    def delete_course(self, index) -> bool:
+        """
+        Given an index of course_list, reads data from user data dir, deletes index,
+        and saves new list back to user data dir. Returns whether the operation was
+        successful
+        """
+        try:
+            assert self._course_list[index]
+
+            self.read_courses_from_user_dir()
+            del self._course_list[index]
+            self.save_courses_to_user_dir()
+
+            return True
+
+        except:
+            return False
+
     def get_course_status(self, course: dict) -> str:
         """
         Given a course object, sends a request and returns whether the course status
@@ -92,8 +110,8 @@ class WebScraper():
 
         try:
             for course in self._course_list:
-                # Save current status to a tmp var
-                tmp_status = course['status']
+                # Update prev_status
+                course['prev_status'] = course['status']
 
                 # Update status
                 course['status'] = self.get_course_status(course)
@@ -103,14 +121,12 @@ class WebScraper():
                 formatted_time = datetime.datetime.strftime(now, '%I:%M:%S')
                 course['last_update'] = formatted_time
 
-                # If status changed, send notification
-                if (course['status'] != course['prev_status']):
+                # If status changed and the old status was not unknown, send notification
+                if (course['status'] != course['prev_status'] and course['prev_status'] != 'unknown'):
                     Common.notification(f"{course['subject']} {course['course_num']} {course['label']} is {course['status']}",
                                         f"The course was previously {course['prev_status']}.",
                                         "dialog-information")
 
-                # Update prev_status
-                course['prev_status'] = tmp_status
 
         except Exception as err:
             print(f'Exception thrown: {err}')

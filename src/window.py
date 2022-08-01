@@ -32,6 +32,8 @@ class CanariWindow(Gtk.ApplicationWindow):
     main_screen            = Gtk.Template.Child()
     add_course_button      = Gtk.Template.Child()
     refresh_courses_button = Gtk.Template.Child()
+    select_courses_button  = Gtk.Template.Child()
+    delete_course_button   = Gtk.Template.Child()
     course_list_box        = Gtk.Template.Child()
 
     course_list_box_children = []
@@ -41,6 +43,8 @@ class CanariWindow(Gtk.ApplicationWindow):
 
         # Window actions
         Common.create_action(self, 'refresh', self.on_refresh_action)
+        Common.create_action(self, 'select', self.on_select_action)
+        Common.create_action(self, 'delete', self.on_delete_action)
 
         # Initialize the web scraper
         self.scraper = scraper
@@ -52,7 +56,37 @@ class CanariWindow(Gtk.ApplicationWindow):
         self.show_content(self.scraper.get_course_list())
         self.show_tracked_courses(self.scraper.get_course_list())
 
-        # self.save_courses_to_user_dir(scraper.course_list)
+        # Initially hide the delete course button
+        self.delete_course_button.hide()
+
+    def on_delete_action(self, widget, _) -> None:
+        """
+        Callback for the win.delete action
+        """
+        row = self.course_list_box.get_selected_row()
+        if (row):
+            if (self.scraper.delete_course(self.course_list_box_children.index(row))):
+                self.refresh_courses()
+            else:
+                self.toast_overlay.add_toast(Adw.Toast(title=f"An error occurred while deleting the course"))
+
+
+    def on_select_action(self, widget, _) -> None:
+        """
+        Callback for the win.select action. Toggles between "View" and "Edit"
+        mode for the course list.
+        """
+        mode = self.course_list_box.get_selection_mode()
+        if (mode == Gtk.SelectionMode.SINGLE):
+            self.course_list_box.set_selection_mode(Gtk.SelectionMode.NONE)
+            self.delete_course_button.hide()
+            self.select_courses_button.set_icon_name('selection-mode-symbolic')
+            self.select_courses_button.set_tooltip_text('Select courses')
+        else:
+            self.course_list_box.set_selection_mode(Gtk.SelectionMode.SINGLE)
+            self.delete_course_button.show()
+            self.select_courses_button.set_icon_name('view-dual-symbolic')
+            self.select_courses_button.set_tooltip_text('View courses')
 
     def on_refresh_action(self, widget, _) -> None:
         """Callback for the win.refresh action."""
@@ -185,7 +219,7 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
             'label': label,
             'course_id': course_id,
             'url': f'https://classes.cornell.edu/browse/roster/{semester}/class/{subject}/{course_num}',
-            'status': 'closed',
+            'status': 'unknown',
             'prev_status': 'unknown',
             'last_update': 'unknown'
         }
