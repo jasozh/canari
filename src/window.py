@@ -203,9 +203,10 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
 
     def __init__(self, parent, scraper):
         super().__init__()
-        self.set_transient_for(parent)
 
+        # Set parent
         self.parent = parent
+        self.set_transient_for(self.parent)
 
         # Window actions
         Common.create_action(self, 'destroy', self.on_destroy_action)
@@ -240,7 +241,6 @@ class CourseEditorDialog(Gtk.ApplicationWindow):
 
         if self.scraper.add_course(course):
             self.destroy()
-            # self.canari_window.refresh_courses()
-            self.parent.refresh_courses()
+            self.parent.refresh_courses(toast=False)
         else:
             self.toast_overlay.add_toast(Adw.Toast(title=f"Invalid course data, please try again"))
