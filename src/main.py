@@ -20,8 +20,9 @@ import gi
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
+gi.require_version('Notify', '0.7')
 
-from gi.repository import Gtk, Gio, Adw
+from gi.repository import Gtk, Gio, Adw, Notify
 from .window import CanariWindow, AboutDialog, CourseEditorDialog
 from .common import Common
 from .webscraper import WebScraper
@@ -32,6 +33,9 @@ class CanariApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id='com.github.jasozh.Canari',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
+
+        # Initialize libnotify
+        Notify.init('Canari')
 
         # App actions
         Common.create_action(self, 'quit', self.on_quit_action)

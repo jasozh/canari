@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import GLib, Gio
+from gi.repository import GLib, Gio, Notify
 import json
 
 class Common():
@@ -37,3 +37,12 @@ class Common():
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", callback)
         object.add_action(action)
+
+    @classmethod
+    def notification(self, title: str, content: str, icon: str) -> None:
+        """
+        Sends a notification with title, content, and icon. Sample icon strings
+        include: "dialog-information", "dialog-error"
+        """
+        notif = Notify.Notification.new(title, content, icon)
+        notif.show()

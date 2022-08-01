@@ -23,6 +23,7 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
+from .common import Common
 # from .tmpdata import course_data
 
 class WebScraper():
@@ -91,8 +92,8 @@ class WebScraper():
 
         try:
             for course in self._course_list:
-                # Update prev_status
-                course['prev_status'] = course['status']
+                # Save current status to a tmp var
+                tmp_status = course['status']
 
                 # Update status
                 course['status'] = self.get_course_status(course)
@@ -101,6 +102,15 @@ class WebScraper():
                 now = datetime.datetime.now()
                 formatted_time = datetime.datetime.strftime(now, '%I:%M:%S')
                 course['last_update'] = formatted_time
+
+                # If status changed, send notification
+                if (course['status'] != course['prev_status']):
+                    Common.notification(f"{course['subject']} {course['course_num']} {course['label']} is {course['status']}",
+                                        f"The course was previously {course['prev_status']}.",
+                                        "dialog-information")
+
+                # Update prev_status
+                course['prev_status'] = tmp_status
 
         except Exception as err:
             print(f'Exception thrown: {err}')
@@ -152,3 +162,4 @@ class WebScraper():
                 print('Error occurred when saving data')
         else:
             print('Error when creating directories for destination file')
+
