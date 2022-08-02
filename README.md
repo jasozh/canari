@@ -14,4 +14,4 @@ Canari is officially provided as a Flatpak. To install:
 There are currently no plans to host a Flatpak repository. You can check this page periodically to download new releases.
 
 ## Building
-The recommended way to build Canari is through GNOME Builder. Visit the guide https://wiki.gnome.org/Newcomers/BuildProject to get started.
+The recommended way to build Canari is through GNOME Builder. Visit https://wiki.gnome.org/Newcomers/BuildProject to get started.
