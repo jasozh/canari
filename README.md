@@ -1,4 +1,4 @@
-# Canari
+## Canari
 Canari is a GTK4/libadwaita app that tracks the enrollment status of Cornell classes. Requests are sent to Class Roster every 10 minutes, and updates are communicated through desktop notifications. If you need to add a class and are looking for a native Linux solution, this is the app for you.
 
 <p align="center">
