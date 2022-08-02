@@ -168,8 +168,7 @@ class WebScraper():
     def save_courses_to_user_dir(self) -> bool:
         """
         Saves course_list as a JSON file to the user data directory:
-            /home/<username>/.local/share/canari/course_data.json
-            /home/<username>/.var/app/com.github.jasozh.Canari/data/canari/course_data.json
+            GLIB_DATADIR/canari/course_data.json
         """
         json_data = json.dumps(self._course_list, indent = 2)
         print(json_data)
