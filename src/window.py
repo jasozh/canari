@@ -102,7 +102,7 @@ class CanariWindow(Gtk.ApplicationWindow):
         Returns True to facilitate GLib.timeout_add_seconds()
         """
         # Default limit set to 5 minutes (300 seconds)
-        limit = 300
+        limit = 20
 
         time_diff = time.time() - self.last_refresh_time
         if time_diff > limit:
@@ -111,6 +111,8 @@ class CanariWindow(Gtk.ApplicationWindow):
             num = int(limit - time_diff)
             mins = str(num // 60)
             secs = str(num % 60)
+            if len(secs) < 2:
+                secs = f'0{secs}'
             self.refresh_tracker.set_text(f'Next refresh in {mins}:{secs}')
 
         return True
@@ -208,7 +210,7 @@ class AboutDialog(Gtk.AboutDialog):
     def __init__(self, parent):
         Gtk.AboutDialog.__init__(self)
         self.props.program_name = 'Canari'
-        self.props.version = "0.1.1"
+        self.props.version = "0.1.2"
         self.props.authors = ['Jason Zheng']
         self.props.copyright = '2022 Jason Zheng'
         self.props.logo_icon_name = 'com.github.jasozh.Canari'
