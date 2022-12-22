@@ -102,7 +102,7 @@ class CanariWindow(Gtk.ApplicationWindow):
         Returns True to facilitate GLib.timeout_add_seconds()
         """
         # Default limit set to 5 minutes (300 seconds)
-        limit = 20
+        limit = 300
 
         time_diff = time.time() - self.last_refresh_time
         if time_diff > limit:
