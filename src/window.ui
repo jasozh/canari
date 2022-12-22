@@ -109,12 +109,29 @@
 
                     <!-- HEADER -->
                     <child>
-                      <object class="GtkLabel">
-                        <property name="label">Tracked Courses</property>
-                        <property name="css-classes">heading</property>
-                        <property name="halign">start</property>
-                        <property name="margin-bottom">12</property>
-                        <property name="margin-top">24</property>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="hexpand">true</property>
+                        <child>
+                          <object class="GtkLabel" id="refresh_tracker">
+                            <property name="label">Next refresh in 0:00</property>
+                            <property name="hexpand">true</property>
+                            <property name="css-classes">heading</property>
+                            <property name="halign">start</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="margin-top">24</property>
+                          </object>
+                        </child>
+                        <!-- <child> -->
+                        <!--   <object class="GtkLabel"> -->
+                        <!--     <property name="label">Tracked Courses</property> -->
+                        <!--     <property name="hexpand">true</property> -->
+                        <!--     <property name="css-classes">heading</property> -->
+                        <!--     <property name="halign">end</property> -->
+                        <!--     <property name="margin-bottom">12</property> -->
+                        <!--     <property name="margin-top">24</property> -->
+                        <!--   </object> -->
+                        <!-- </child> -->
                       </object>
                     </child>
 

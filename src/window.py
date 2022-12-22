@@ -20,6 +20,7 @@ from .webscraper import WebScraper
 from .common import Common
 
 import json
+import time
 
 
 @Gtk.Template(resource_path='/com/github/jasozh/Canari/window.ui')
@@ -30,6 +31,7 @@ class CanariWindow(Gtk.ApplicationWindow):
     toast_overlay          = Gtk.Template.Child()
     welcome_screen         = Gtk.Template.Child()
     main_screen            = Gtk.Template.Child()
+    refresh_tracker        = Gtk.Template.Child()
     add_course_button      = Gtk.Template.Child()
     refresh_courses_button = Gtk.Template.Child()
     select_courses_button  = Gtk.Template.Child()
@@ -49,8 +51,11 @@ class CanariWindow(Gtk.ApplicationWindow):
         # Initialize the web scraper
         self.scraper = scraper
 
-        # Add persistent timer to refresh content every 10 minutes (600 sec)
-        GLib.timeout_add_seconds(600, self.refresh_courses)
+        # Initialize last refresh time
+        self.last_refresh_time = 0
+
+        # Add persistent timer that checks the time status every second
+        GLib.timeout_add_seconds(1, self.periodic_refresh)
 
         # Initialize screen
         self.refresh_courses(toast=False)
@@ -88,14 +93,39 @@ class CanariWindow(Gtk.ApplicationWindow):
         """Callback for the win.refresh action."""
         self.refresh_courses()
 
-    def refresh_courses(self, toast=True) -> bool:
+    def periodic_refresh(self) -> bool:
         """
-        Refreshes course statuses in course_list. Returns True to facilitate
-        GLib.timeout_add_seconds().
+        Callback for the persistent refresh action. Every second, checks to see whether
+        the difference in time since the last refresh exceeds 10 minutes. Refreshes if
+        this condition is true.
+
+        Returns True to facilitate GLib.timeout_add_seconds()
+        """
+        # Default limit set to 5 minutes (300 seconds)
+        limit = 300
+
+        time_diff = time.time() - self.last_refresh_time
+        if time_diff > limit:
+            self.refresh_courses()
+        else:
+            num = int(limit - time_diff)
+            mins = str(num // 60)
+            secs = str(num % 60)
+            self.refresh_tracker.set_text(f'Next refresh in {mins}:{secs}')
+
+        return True
+
+    def refresh_courses(self, toast=True) -> None:
+        """
+        Refreshes course statuses in course_list.
 
         Args:
             toast: a bool, whether or not to show a toast when refreshing
         """
+        # Reset last refresh time
+        self.last_refresh_time = time.time()
+
+        # Refresh courses
         if (self.scraper.update_course_list()):
             self.show_content(self.scraper.get_course_list())
             self.show_tracked_courses(self.scraper.get_course_list())
@@ -105,8 +135,6 @@ class CanariWindow(Gtk.ApplicationWindow):
         else:
             self.toast_overlay.add_toast(Adw.Toast(title=f"Error occurred when refreshing courses"))
             Common.notification("Refresh error", "Error occurred when refreshing courses", "dialog-warning")
-
-        return True
 
     def show_content(self, course_list: list) -> None:
         """
