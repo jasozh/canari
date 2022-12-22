@@ -208,7 +208,7 @@ class AboutDialog(Gtk.AboutDialog):
     def __init__(self, parent):
         Gtk.AboutDialog.__init__(self)
         self.props.program_name = 'Canari'
-        self.props.version = "0.1.0"
+        self.props.version = "0.1.1"
         self.props.authors = ['Jason Zheng']
         self.props.copyright = '2022 Jason Zheng'
         self.props.logo_icon_name = 'com.github.jasozh.Canari'
